@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebAPI.Models;
 
 namespace WebAPI.Services.UserServices
 {
     public interface IUserService
     {
-         List<User> GetAllUsers();
+         Task<List<User>> GetAllUsers();
          
-         User GetUserById(int id);
+         Task<User> GetUserById(int id);
 
-         List<User> AddUser(User newUser);
+         Task<List<User>> AddUser(User newUser);
     }
 }
