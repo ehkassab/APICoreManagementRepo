@@ -7,7 +7,7 @@ namespace WebAPI.Services.UserServices
     {
          List<User> GetAllUsers();
          
-         User GetUserById();
+         User GetUserById(int id);
 
          List<User> AddUser(User newUser);
     }

@@ -1,22 +1,28 @@
+using System.Collections.Generic;
+using System.Linq;
 using WebAPI.Models;
 
 namespace WebAPI.Services.UserServices
 {
     public class UserService : IUserService
     {
+        private static List<User> users = new List<User>{
+            new User(),new User{Id = 1,Name = "Ahmed"}
+        };
+
         public System.Collections.Generic.List<User> AddUser(User newUser)
         {
-            throw new System.NotImplementedException();
+            return users;
         }
 
         public System.Collections.Generic.List<User> GetAllUsers()
         {
-            throw new System.NotImplementedException();
+            return users;
         }
 
-        public User GetUserById()
+        public User GetUserById(int id)
         {
-            throw new System.NotImplementedException();
+           return users.FirstOrDefault(t=>t.Id == id);
         }
     }
 }
