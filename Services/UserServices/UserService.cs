@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using APICoreManagementRepo.Models;
 using WebAPI.Models;
 
 namespace WebAPI.Services.UserServices
@@ -11,19 +12,25 @@ namespace WebAPI.Services.UserServices
             new User(),new User{Id = 1,Name = "A"},new User{Id = 2,Name = "B"},new User{Id = 3,Name = "C"},new User{Id = 4,Name = "D"}
         };
         
-        public async Task<List<User>> AddUser(User newUser)
+        public async Task<ServiceResponse<List<User>>> AddUser(User newUser)
         {
-            return users;
+            ServiceResponse<List<User>> result = new ServiceResponse<List<User>>();
+            result.Data = users;
+            return result;
         }
 
-        public async Task<List<User>> GetAllUsers()
+        public async Task<ServiceResponse<List<User>>> GetAllUsers()
         {
-            return users;
+             ServiceResponse<List<User>> result = new ServiceResponse<List<User>>();
+            result.Data = users;
+            return result;
         }
 
-        public async Task<User> GetUserById(int id)
+        public async Task<ServiceResponse<User>> GetUserById(int id)
         {
-           return users.FirstOrDefault(t=>t.Id == id);
+            ServiceResponse<User> result = new ServiceResponse<User>();
+            result.Data = users.FirstOrDefault(t=>t.Id == id);
+            return result;
         }
     }    
 }
