@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using APICoreManagementRepo.Data;
 using APICoreManagementRepo.DTOs.User;
 using APICoreManagementRepo.Models;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
 
 namespace WebAPI.Services.UserServices
@@ -12,9 +14,12 @@ namespace WebAPI.Services.UserServices
     {
 
         private readonly IMapper _mapper;
-        public UserService(IMapper mapper)
+        private readonly DataContext _context;
+
+        public UserService(IMapper mapper,DataContext context)
         {
             _mapper = mapper;
+            _context = context;
         }
         private static List<User> users = new List<User>{
             new User(),
@@ -27,22 +32,25 @@ namespace WebAPI.Services.UserServices
         public async Task<ServiceResponse<List<GetUserDTO>>> AddUser(PostUserDTO newUser)
         {
             ServiceResponse<List<GetUserDTO>> result = new ServiceResponse<List<GetUserDTO>>();
-            users.Add(_mapper.Map<User>(newUser));
-            result.Data = users.Select(c=> _mapper.Map<GetUserDTO>(c)).ToList();
+            await _context.User.AddAsync(_mapper.Map<User>(newUser));
+            await _context.SaveChangesAsync();
+            result.Data = _context.User.Select(c=> _mapper.Map<GetUserDTO>(c)).ToList();
             return result;
         }
 
         public async Task<ServiceResponse<List<GetUserDTO>>> GetAllUsers()
         {
-             ServiceResponse<List<GetUserDTO>> result = new ServiceResponse<List<GetUserDTO>>();
-            result.Data = users.Select(c=> _mapper.Map<GetUserDTO>(c)).ToList();
+            ServiceResponse<List<GetUserDTO>> result = new ServiceResponse<List<GetUserDTO>>();
+            List<User> dbUSers = await _context.User.ToListAsync();
+            result.Data = dbUSers.Select(c => _mapper.Map<GetUserDTO>(c)).ToList();
             return result;
         }
 
         public async Task<ServiceResponse<GetUserDTO>> GetUserById(int id)
         {
             ServiceResponse<GetUserDTO> result = new ServiceResponse<GetUserDTO>();
-            result.Data = _mapper.Map<GetUserDTO>(users.FirstOrDefault(t=>t.Id == id));
+            User dbuser = await _context.User.FirstOrDefaultAsync(y=>y.Id == id);
+            result.Data = _mapper.Map<GetUserDTO>(dbuser);
             return result;
         }
     }    
