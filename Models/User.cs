@@ -1,3 +1,5 @@
+using WebAPI.Migrations;
+
 namespace WebAPI.Models
 {
     public class User
@@ -9,5 +11,6 @@ namespace WebAPI.Models
         public int  Defense {get;set;}
         public int Intelligence {get;set;}
         public UserTypeEnum UserType {get;set;}
+        public UserAuth Auth { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using APICoreManagementRepo.Data;
+using APICoreManagementRepo.Services.Auth;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +34,7 @@ namespace WebAPI
             services.AddControllers();
             services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IAuthServices,AuthServices>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

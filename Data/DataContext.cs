@@ -7,5 +7,6 @@ namespace APICoreManagementRepo.Data
     {
          public DataContext(DbContextOptions<DataContext> options) : base(options) { }
          public DbSet<User> User { get; set; }
+         public DbSet<UserAuth> Auths {get;set;}
     }
 }
